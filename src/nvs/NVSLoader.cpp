@@ -1,6 +1,7 @@
-#include "NVSLoader.h"
+#include "nvs/NVSLoader.h"
 
-#include "Arduino_JSON.h"
+#include <Arduino_JSON.h>
+
 #include "common.h"
 
 static const size_t JSON_FILE_BUFFER_SIZE = 1024;
