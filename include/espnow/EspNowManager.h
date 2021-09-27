@@ -14,7 +14,7 @@ public:
 
     virtual const uint8_t *const getAddress(void) const;
     virtual bool begin(void);
-    virtual bool registerPeer(const uint8_t *addr);  // 送信先
+    virtual bool registerPeer(const uint8_t *addr);
     virtual bool unregisterPeer(const uint8_t *addr);
     virtual bool registerCallback(esp_now_recv_cb_t cb);
     virtual bool registerCallback(esp_now_send_cb_t cb);
