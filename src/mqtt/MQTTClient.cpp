@@ -51,9 +51,9 @@ bool MQTTClient::reconnect(const char* user, const char* password) {
 }
 
 bool MQTTClient::subscribe(const char* topic, uint8_t qos) {
-    this->client.subscribe(topic, qos);
+    return this->client.subscribe(topic, qos);
 }
 
 bool MQTTClient::publish(const char* topic, const char* payload) {
-    this->client.publish(topic, payload);
+    return this->client.publish(topic, payload);
 }
