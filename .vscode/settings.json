@@ -13,6 +13,7 @@
         "initializer_list": "cpp"
     },
     "cSpell.words": [
-        "CRGB"
+        "CRGB",
+        "MQTT"
     ],
 }

@@ -10,7 +10,7 @@ const char KEY_SSID_PASSWORD[] = "password";
 
 const char WiFiController::CONFIG_FILE[] = "/settings.json";
 
-WiFiController::WiFiController(void) : nvsLoader(NVS_NAMESPACE) {
+WiFiController::WiFiController(void) : nvsLoader(NVS_NAMESPACE), client() {
 }
 
 WiFiController::~WiFiController(void) {
@@ -45,6 +45,10 @@ bool WiFiController::isConnected(void) const {
 
 bool WiFiController::disconnect(void) {
     return WiFi.disconnect(true);
+}
+
+WiFiClient& WiFiController::getClient(void) {
+    return this->client;
 }
 
 bool WiFiController::connectWiFi(const char* ssid, const char* passwd,

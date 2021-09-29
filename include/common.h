@@ -1,6 +1,10 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#ifndef ETH_ALEN
+#define ETH_ALEN 6
+#endif
+
 #ifdef ENABLE_SERIAL_MONITOR
 #include <Arduino.h>
 #define SERIAL_BEGIN(a) Serial.begin(a)

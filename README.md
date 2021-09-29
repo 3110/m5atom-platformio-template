@@ -18,9 +18,11 @@ VSCodeのステータスバー（画面下）にある「Switch ProjectIO Projec
    M5ATOMをWiFiに接続する雛形
 * `m5atom-ble-keyboard`  
    M5ATOMをBLEキーボードにする雛形  
-   M5ATOMのボタンを押すと`SEND_KEY`に指定したキーを押したのと同じになります。
+   M5ATOMのボタンを押すと`SEND_KEY`に指定したキーを押したのと同じ
 * `m5atom-espnow`  
    ESPNOWでデータを送受信する雛形
+* `m5atom-mqtt`  
+   M5ATOMをMQTTクライアントにする雛形。`m5atom-wifi`も必要
 
 ## WiFi設定
 

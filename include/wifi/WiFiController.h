@@ -18,6 +18,8 @@ public:
     virtual bool isConnected(void) const;
     virtual bool disconnect(void);
 
+    virtual WiFiClient& getClient(void);
+
 protected:
     virtual bool connectWiFi(const char* ssid, const char* passwd,
                              uint8_t retries,
@@ -25,6 +27,7 @@ protected:
 
 private:
     NVSLoader nvsLoader;
+    WiFiClient client;
 };
 
 #endif
