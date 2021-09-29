@@ -96,7 +96,7 @@ void OnDataReceived(const uint8_t* addr, const uint8_t* data, int len) {
 const CRGB CRGB_SUBSCRIBED(0xff, 0xff, 0x00);
 
 const char MQTT_BROKER[] = "192.168.11.82";
-const char SAMPLE_TOPIC[] = "atom/sample";
+const char SAMPLE_TOPIC[] = "m5stack/sample";
 
 const size_t MESSAGE_BUFFER_SIZE = 256;
 const size_t MAX_CLIENT_ID_PREFIX_LEN = 10;
