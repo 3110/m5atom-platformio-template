@@ -1,5 +1,5 @@
 #ifndef BLE_KEYBOARD_CONTROLLER_H_
-#define BLE_KEYBOARD_CONTROLLERH_
+#define BLE_KEYBOARD_CONTROLLER_H_
 
 #include <BleKeyboard.h>
 
