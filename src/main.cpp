@@ -6,7 +6,6 @@ const CRGB CRGB_STARTED(0xff, 0xff, 0xff);
 const CRGB CRGB_CONNECTING(0x0, 0xff, 0xff);
 const CRGB CRGB_CONNECTED(0x00, 0xff, 0x00);
 const CRGB CRGB_DISCONNECTED(0xff, 0x00, 0x00);
-const CRGB CRGB_OFF(0x00, 0x00, 0x00);
 
 #ifdef ENABLE_BLE_KEYBOARD
 #include "ble/BLEKeyboardController.h"
@@ -57,7 +56,7 @@ void doUpdate(BLEKeyboardController& controller) {
 }
 
 void doDisconnect(void) {
-    M5.dis.fillpix(BLEKeyboardController::CRGB_DISCONNECTED);
+    M5.dis.fillpix(CRGB_DISCONNECTED);
     SERIAL_PRINTLN("BLE Keyboard: Disconnected");
 }
 #endif
@@ -66,7 +65,7 @@ void doDisconnect(void) {
 WiFiController wifiController;
 
 void connectingWiFiCallback(uint8_t retries) {
-    M5.dis.fillpix(retries % 2 == 0 ? CRGB_OFF : CRGB_CONNECTING);
+    M5.dis.fillpix(retries % 2 == 0 ? CRGB::Black : CRGB_CONNECTING);
 }
 #endif
 
@@ -76,6 +75,7 @@ const uint8_t MESSAGE[] = "Hello, world!";
 const uint32_t MESSAGE_INTERVAL_MS = 5000;
 
 void onDataSent(const uint8_t* addr, esp_now_send_status_t status) {
+    SERIAL_PRINT("onDataSent(");
     SERIAL_MAC_ADDRESS_PRINT(addr);
     SERIAL_PRINTF_LN("): %s", status == ESP_NOW_SEND_SUCCESS
                                   ? "Delivery Success"
@@ -83,6 +83,7 @@ void onDataSent(const uint8_t* addr, esp_now_send_status_t status) {
 }
 
 void onDataReceived(const uint8_t* addr, const uint8_t* data, int len) {
+    SERIAL_PRINT("onDataReceived(");
     SERIAL_MAC_ADDRESS_PRINT(addr);
     SERIAL_PRINTLN("): [");
     SERIAL_DUMP(data, len);
@@ -117,7 +118,7 @@ bool setMacAddress(uint8_t* buf, size_t size) {
 }
 
 void connectingMQTTCallback(uint8_t retries) {
-    M5.dis.fillpix(retries % 2 == 0 ? CRGB_OFF : CRGB_CONNECTING);
+    M5.dis.fillpix(retries % 2 == 0 ? CRGB::Black : CRGB_CONNECTING);
 }
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
@@ -150,6 +151,7 @@ void setup(void) {
 #ifdef ENABLE_ESPNOW
     espNowManager.begin();
     espNowManager.registerCallback(onDataSent);
+    espNowManager.registerCallback(onDataReceived);
     espNowManager.registerPeer(EspNowManager::BROADCAST_ADDRESS);
 #endif
 
