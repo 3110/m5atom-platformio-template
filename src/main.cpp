@@ -75,16 +75,14 @@ EspNowManager espNowManager;
 const uint8_t MESSAGE[] = "Hello, world!";
 const uint32_t MESSAGE_INTERVAL_MS = 5000;
 
-void OnDataSent(const uint8_t* addr, esp_now_send_status_t status) {
-    SERIAL_PRINT("OnDataSent(");
+void onDataSent(const uint8_t* addr, esp_now_send_status_t status) {
     SERIAL_MAC_ADDRESS_PRINT(addr);
     SERIAL_PRINTF_LN("): %s", status == ESP_NOW_SEND_SUCCESS
                                   ? "Delivery Success"
                                   : "Delivery Fail");
 }
 
-void OnDataReceived(const uint8_t* addr, const uint8_t* data, int len) {
-    SERIAL_PRINT("OnDataReceived(");
+void onDataReceived(const uint8_t* addr, const uint8_t* data, int len) {
     SERIAL_MAC_ADDRESS_PRINT(addr);
     SERIAL_PRINTLN("): [");
     SERIAL_DUMP(data, len);
@@ -151,8 +149,7 @@ void setup(void) {
 
 #ifdef ENABLE_ESPNOW
     espNowManager.begin();
-    espNowManager.registerCallback(OnDataSent);
-    espNowManager.registerCallback(OnDataReceived);
+    espNowManager.registerCallback(onDataSent);
     espNowManager.registerPeer(EspNowManager::BROADCAST_ADDRESS);
 #endif
 
