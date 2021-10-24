@@ -67,7 +67,7 @@ const char WIFI_NVS_CONFIG_PATH[] = "/settings.json";
 #endif
 
 #ifdef ENABLE_WIFI
-WiFiController wifiController;
+WiFiController wifiController(WIFI_NVS_NAMESPACE);
 
 void connectingWiFiCallback(uint8_t retries) {
     M5.dis.fillpix(retries % 2 == 0 ? CRGB::Black : CRGB_CONNECTING);
@@ -142,8 +142,7 @@ void setup(void) {
     M5.dis.fillpix(CRGB_CONNECTING);
 
 #if defined(ENABLE_WIFI) && !defined(ENABLE_MQTT)
-    if (wifiController.begin(WIFI_NVS_NAMESPACE, WIFI_NVS_CONFIG_PATH,
-                             connectingWiFiCallback)) {
+    if (wifiController.begin(WIFI_NVS_CONFIG_PATH, connectingWiFiCallback)) {
         M5.dis.fillpix(CRGB_CONNECTED);
     } else {
         M5.dis.fillpix(CRGB_DISCONNECTED);

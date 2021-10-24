@@ -10,14 +10,16 @@ public:
     static const int8_t WIFI_RETRY = 30;
     static const unsigned long WIFI_RECONNECT_INTERVAL_MS = 30000;
 
-    WiFiController(void);
+    WiFiController(const char* nvsNamespace);
     virtual ~WiFiController(void);
 
-    virtual bool begin(const char* nvsNamespace, const char* nvsConfigPath,
+    virtual bool begin(const char* nvsConfigPath,
                        void (*connectingCallback)(uint8_t retries));
     virtual bool update(void);
     virtual bool isConnected(void) const;
     virtual bool disconnect(void);
+
+    virtual bool getPreference(const char* key, char* buf, size_t size);
 
     virtual WiFiClient& getClient(void);
 
@@ -28,6 +30,7 @@ protected:
 
 private:
     WiFiClient client;
+    NVSLoader nvsLoader;
     unsigned long prevConnTime;
 };
 
