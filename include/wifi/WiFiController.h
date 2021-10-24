@@ -8,12 +8,12 @@
 class WiFiController {
 public:
     static const int8_t WIFI_RETRY = 30;
-    static const char CONFIG_FILE[];
 
     WiFiController(void);
     virtual ~WiFiController(void);
 
-    virtual bool begin(void (*connectingCallback)(uint8_t retries));
+    virtual bool begin(const char* nvsNapmespace, const char* nvsConfigPath,
+                       void (*connectingCallback)(uint8_t retries));
     virtual bool update(void);
     virtual bool isConnected(void) const;
     virtual bool disconnect(void);
@@ -26,7 +26,6 @@ protected:
                              void (*connectingCallback)(uint8_t retries));
 
 private:
-    NVSLoader nvsLoader;
     WiFiClient client;
 };
 

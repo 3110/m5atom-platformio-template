@@ -2,33 +2,41 @@
 
 #include "common.h"
 
-const char NVS_NAMESPACE[] = "WiFiController";
+const char CONFIG_FILE[] = "/settings.json";
 const char MAX_SSID_LEN = 32;
 const char MAX_SSID_PASSWORD_LEN = 64;
 const char KEY_SSID[] = "ssid";
 const char KEY_SSID_PASSWORD[] = "password";
 
-const char WiFiController::CONFIG_FILE[] = "/settings.json";
-
-WiFiController::WiFiController(void) : nvsLoader(NVS_NAMESPACE), client() {
+WiFiController::WiFiController(void) : client() {
 }
 
 WiFiController::~WiFiController(void) {
 }
 
-bool WiFiController::begin(void (*connectingCallback)(uint8_t retries)) {
+bool WiFiController::begin(const char* nvsNamespace, const char* nvsConfigPath,
+                           void (*connectingCallback)(uint8_t retries)) {
+    if (nvsNamespace == nullptr) {
+        SERIAL_PRINTLN("nvsNamespace is null");
+        return false;
+    }
+    if (nvsConfigPath == nullptr) {
+        SERIAL_PRINTLN("nvsConfigPath is null");
+        return false;
+    }
+    NVSLoader loader(nvsNamespace);
     char ssid[MAX_SSID_LEN + 1] = {0};
     char passwd[MAX_SSID_PASSWORD_LEN + 1] = {0};
 
-    if (!nvsLoader.begin(CONFIG_FILE)) {
+    if (!loader.begin(nvsConfigPath)) {
         return false;
     }
-    if (!nvsLoader.get(KEY_SSID, ssid, sizeof(ssid))) {
-        SERIAL_PRINTLN("SSID is not set");
+    if (!loader.get(KEY_SSID, ssid, sizeof(ssid))) {
+        SERIAL_PRINTF_LN("Key(%s) is not set", KEY_SSID);
         return false;
     }
-    if (!nvsLoader.get(KEY_SSID_PASSWORD, passwd, sizeof(passwd))) {
-        SERIAL_PRINTLN("SSID Password is not set");
+    if (!loader.get(KEY_SSID_PASSWORD, passwd, sizeof(passwd))) {
+        SERIAL_PRINTF_LN("Key(%s) is not set", KEY_SSID_PASSWORD);
         return false;
     }
 
@@ -36,6 +44,8 @@ bool WiFiController::begin(void (*connectingCallback)(uint8_t retries)) {
 }
 
 bool WiFiController::update(void) {
+    if (WiFi.status() != WL_CONNECTED) {
+    }
     return true;
 }
 

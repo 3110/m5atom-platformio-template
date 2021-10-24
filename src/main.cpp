@@ -61,6 +61,11 @@ void doDisconnect(void) {
 }
 #endif
 
+#if defined(ENABLE_WIFI) || defined(ENABLE_MQTT)
+const char WIFI_NVS_NAMESPACE[] = "WiFiController";
+const char WIFI_NVS_CONFIG_PATH[] = "/settings.json";
+#endif
+
 #ifdef ENABLE_WIFI
 WiFiController wifiController;
 
@@ -137,7 +142,8 @@ void setup(void) {
     M5.dis.fillpix(CRGB_CONNECTING);
 
 #if defined(ENABLE_WIFI) && !defined(ENABLE_MQTT)
-    if (wifiController.begin(connectingWiFiCallback)) {
+    if (wifiController.begin(WIFI_NVS_NAMESPACE, WIFI_NVS_CONFIG_PATH,
+                             connectingWiFiCallback)) {
         M5.dis.fillpix(CRGB_CONNECTED);
     } else {
         M5.dis.fillpix(CRGB_DISCONNECTED);
@@ -164,7 +170,8 @@ void setup(void) {
              CLIENT_ID_PREFIX, MAC_ADDRESS[0], MAC_ADDRESS[1], MAC_ADDRESS[2],
              MAC_ADDRESS[3], MAC_ADDRESS[4], MAC_ADDRESS[5]);
     mqttClient.setId(CLIENT_ID);
-    if (!mqttClient.begin(connectingMQTTCallback)) {
+    if (!mqttClient.begin(WIFI_NVS_NAMESPACE, WIFI_NVS_CONFIG_PATH,
+                          connectingMQTTCallback)) {
         M5.dis.fillpix(CRGB_DISCONNECTED);
         while (true) {
         }

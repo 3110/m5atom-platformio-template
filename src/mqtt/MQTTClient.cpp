@@ -11,8 +11,10 @@ void MQTTClient::setId(const char* id) {
     snprintf(this->clientId, sizeof(this->clientId), "%s", id);
 }
 
-bool MQTTClient::begin(void (*connectingCallback)(uint8_t retries)) {
-    return this->wifiController.begin(connectingCallback);
+bool MQTTClient::begin(const char* nvsNamespace, const char* nvsConfigPath,
+                       void (*connectingCallback)(uint8_t retries)) {
+    return this->wifiController.begin(nvsNamespace, nvsConfigPath,
+                                      connectingCallback);
 }
 
 bool MQTTClient::setup(MQTT_CALLBACK_SIGNATURE, const char* broker,

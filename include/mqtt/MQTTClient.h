@@ -18,7 +18,8 @@ public:
     virtual ~MQTTClient(void);
 
     virtual void setId(const char* id);
-    virtual bool begin(void (*connectingCallback)(uint8_t retries));
+    virtual bool begin(const char* nvsNapmespace, const char* nvsConfigPath,
+                       void (*connectingCallback)(uint8_t retries));
     virtual bool setup(MQTT_CALLBACK_SIGNATURE, const char* broker,
                        uint16_t port = BROKER_PORT);
     virtual bool update(void);
