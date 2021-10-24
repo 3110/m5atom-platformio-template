@@ -8,7 +8,7 @@ const char MAX_SSID_PASSWORD_LEN = 64;
 const char KEY_SSID[] = "ssid";
 const char KEY_SSID_PASSWORD[] = "password";
 
-WiFiController::WiFiController(void) : client() {
+WiFiController::WiFiController(void) : client(), prevConnTime(0) {
 }
 
 WiFiController::~WiFiController(void) {
@@ -44,9 +44,23 @@ bool WiFiController::begin(const char* nvsNamespace, const char* nvsConfigPath,
 }
 
 bool WiFiController::update(void) {
-    if (WiFi.status() != WL_CONNECTED) {
+    if (WiFi.status() == WL_CONNECTED) {
+        return true;
     }
-    return true;
+    if (millis() - this->prevConnTime > WIFI_RECONNECT_INTERVAL_MS) {
+        SERIAL_PRINT("Reconnecting to WiFi...");
+        WiFi.disconnect();
+        if (WiFi.reconnect()) {
+            SERIAL_PRINTLN("done.");
+            this->prevConnTime = millis();
+            return true;
+        } else {
+            SERIAL_PRINTLN("failed.");
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 bool WiFiController::isConnected(void) const {
@@ -83,5 +97,6 @@ bool WiFiController::connectWiFi(const char* ssid, const char* passwd,
     SERIAL_PRINTLN();
     SERIAL_PRINTF_LN("WiFi connected: %s", ssid);
     SERIAL_PRINTF_LN("IP address: %s", WiFi.localIP().toString().c_str());
+    this->prevConnTime = millis();
     return true;
 }

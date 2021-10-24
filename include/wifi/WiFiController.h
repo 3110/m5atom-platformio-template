@@ -8,6 +8,7 @@
 class WiFiController {
 public:
     static const int8_t WIFI_RETRY = 30;
+    static const unsigned long WIFI_RECONNECT_INTERVAL_MS = 30000;
 
     WiFiController(void);
     virtual ~WiFiController(void);
@@ -27,6 +28,7 @@ protected:
 
 private:
     WiFiClient client;
+    unsigned long prevConnTime;
 };
 
 #endif
