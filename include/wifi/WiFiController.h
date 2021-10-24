@@ -13,7 +13,7 @@ public:
     WiFiController(void);
     virtual ~WiFiController(void);
 
-    virtual bool begin(const char* nvsNapmespace, const char* nvsConfigPath,
+    virtual bool begin(const char* nvsNamespace, const char* nvsConfigPath,
                        void (*connectingCallback)(uint8_t retries));
     virtual bool update(void);
     virtual bool isConnected(void) const;
