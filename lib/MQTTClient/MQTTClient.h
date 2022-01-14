@@ -1,11 +1,9 @@
-#ifndef ATOM_MQTT_CLIENT_H_
-#define ATOM_MQTT_CLIENT_H_
+#pragma once
 
 #include <M5Atom.h>
 #include <PubSubClient.h>
 
-#include "common.h"
-#include "wifi/WiFiController.h"
+#include "WiFiController.h"
 
 class MQTTClient {
 public:
@@ -35,5 +33,3 @@ private:
     WiFiController wifiController;
     PubSubClient client;
 };
-
-#endif

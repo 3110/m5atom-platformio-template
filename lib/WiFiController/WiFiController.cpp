@@ -1,6 +1,4 @@
-#include "wifi/WiFiController.h"
-
-#include "common.h"
+#include "WiFiController.h"
 
 const char MAX_SSID_LEN = 32;
 const char MAX_SSID_PASSWORD_LEN = 64;

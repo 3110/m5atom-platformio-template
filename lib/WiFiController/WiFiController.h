@@ -1,9 +1,8 @@
-#ifndef WIFI_CONTROLLER_H_
-#define WIFI_CONTROLLER_H_
+#pragma once
 
 #include <WiFi.h>
 
-#include "nvs/NVSLoader.h"
+#include "NVSLoader.h"
 
 class WiFiController {
 public:
@@ -33,5 +32,3 @@ private:
     NVSLoader nvsLoader;
     unsigned long prevConnTime;
 };
-
-#endif

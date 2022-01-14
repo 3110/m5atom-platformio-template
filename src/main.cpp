@@ -1,6 +1,6 @@
 #include <M5Atom.h>
 
-#include "common.h"
+#include "Debug.h"
 
 const CRGB CRGB_STARTED(0xff, 0xff, 0xff);
 const CRGB CRGB_CONNECTING(0x0, 0xff, 0xff);
@@ -15,15 +15,15 @@ const char DEVICE_MANUFACTURER[] = "M5Stack";
 #endif
 
 #ifdef ENABLE_WIFI
-#include "wifi/WiFiController.h"
+#include "WiFiController.h"
 #endif
 
 #ifdef ENABLE_ESPNOW
-#include "espnow/EspNowManager.h"
+#include "EspNowManager.h"
 #endif
 
 #ifdef ENABLE_MQTT
-#include "mqtt/MQTTClient.h"
+#include "MQTTClient.h"
 #endif
 
 const bool ENABLE_SERIAL = true;
